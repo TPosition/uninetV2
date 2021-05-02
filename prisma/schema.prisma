@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id
+  createdAt DateTime @default(now())
+  Anonymous String
+  type      Int
+  password  String
+}
+
+model Topics {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  user      String
+  tag       String
+  title     String
+  content   String
+}
+
+model Replies {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  msgId     Int
+  category  String
+  user      String
+  content   String
+}
+
+model Dashboard {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  title     String
+  content   String
+}
+
+model Hostels {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  tag         String
+  rentFee     Float
+  bed         Int
+  contact     String
+  water       Boolean
+  electricity Boolean
+  wifi        Boolean
+  bathroom    Int
+  unit        String
+  furniture   String
+  description String
+  user        String
+}
+
+model Trading {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  tag         String
+  title       String
+  image       String
+  contact     String
+  description String
+  user        String
+}

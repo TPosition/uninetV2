@@ -1,0 +1,137 @@
+/* ensure all pages have Bootstrap CSS */
+@import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.md-container {
+  max-width: 800px;
+  padding-top: 2rem;
+}
+
+.sml-card {
+  width: 22rem;
+  margin: 1rem 0;
+}
+
+.cntr-footer {
+  height: 80px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #ccc;
+}
+
+.sml-logo {
+  height: 1em;
+  margin-left: 10px;
+}
+
+.bg-glass{
+  background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.bg-glass-pure{
+  background: rgba( 255, 255, 255, 0.25 );
+}
+
+.bg-glass-red{
+  background: rgb(255 0 24 / 23%);
+  box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+a:hover{
+  text-decoration:none !important
+}
+
+.bg-trans{
+  background-color: rgba(0, 0, 0, 0);
+}
+/* 
+.ant-layout{
+  background-color: rgba(0, 0, 0, 0);
+} */
+
+.min-height{
+  min-height: 500px;
+}
+
+.res-w{
+  margin-left: 50px;
+}
+
+.z-index-1{
+  z-index: 1;
+}
+
+.modal-backdrop{
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.hover-shadow:hover{
+  background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.mh-48{
+  min-height: 48px;
+}
+
+.cursor-pointer:hover{
+  cursor: pointer;
+}
+
+.text-black{
+  color:black;
+}
+
+.hover-text-black:hover{
+  color:black !important;
+}
+
+.text-grey{
+  color: #6c757d;
+}
+
+.text-grey:hover{
+  color: black;
+}
+
+.white-space-pre {
+  white-space: pre-line;
+}
+
+.border-top-grey{
+  border-top:  1px solid #6c757d;
+}
+
+.cls-1 {
+  fill: #ffffff;
+}
+
+@media screen and (max-width: 770px) {
+  .res-w{
+    margin-left: 0px;
+  }
+
+  .res-position{
+    position: absolute;
+    z-index: 1;
+  }
+}
