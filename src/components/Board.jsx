@@ -1,8 +1,7 @@
-import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap'
+import { Row, Col, Card, Button } from 'react-bootstrap'
 import Head from 'next/head'
 import { Plus } from 'react-bootstrap-icons'
-import { useEffect, useState } from 'react'
-import _ from 'lodash'
+import { useState } from 'react'
 import Skeleton from 'react-loading-skeleton';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
@@ -12,20 +11,12 @@ export default function Board(props) {
     const {
         boardTitle = "Board title",
         tabOption = [],
-        apiCreate = "",
-        apiDelete = "",
-        apiUpdate = "",
-        apiGet = "",
-        boardItems = "",
         ApiData = {},
+        allowAdd = true
     } = props
 
     const tabList = ["All", ...tabOption]
-    const [user, setUser] = useState("")
     const router = useRouter()
-
-    useEffect(() => {
-    }, [])
 
     return <>
         <Head>
@@ -33,9 +24,9 @@ export default function Board(props) {
         </Head>
         <div class="d-flex justify-content-between mt-4">
             <h3>{boardTitle}</h3>
-            <Button onClick={() => router.push(router.pathname + "/add")}>
+            {allowAdd && <Button onClick={() => router.push(router.pathname + "/add")}>
                 <Plus size='32px' />
-            </Button>
+            </Button>}
         </div>
         {(!ApiData[0] && !ApiData.message) && <Skeleton count={10} />}
 
@@ -43,7 +34,7 @@ export default function Board(props) {
             {tabList.map((key0, index) => {
                 return <TabPane tab={key0} key={key0} className="pb-2">
                     {ApiData[0] && ApiData.map((key1, jndex) => {
-                        return Listing(key1, jndex)
+                        return (key1.tag === key0 || key0 === "All") && Listing(key1, jndex)
                     })}
                 </TabPane>
             })
@@ -58,7 +49,7 @@ export default function Board(props) {
     function Listing(key, dex) {
         return <Row>
             <Col>
-                <Card as="a" key={dex} onClick={() => router.push(router.pathname + "/" + key.id)} className="text-grey text-decoration-none w-100 mt-2 pl-2 bg-glass-pure hover-shadow mh-48 cursor-pointer pr-3 pt-1"><Card.Title> {key.title}{key.tag ? " | " + key.tag : ""} </Card.Title></Card>
+                <Card as="a" key={dex} onClick={() => router.push(router.pathname + "/" + key.id)} className="text-grey text-decoration-none w-100 mt-2 pl-2 bg-glass-pure hover-shadow mh-48 cursor-pointer pr-3 pt-1"><Card.Title> {key.title}{key.tag ? " | " + key.tag : ""} {key.image && <img class="float-right" height={40} src={JSON.parse(key.image)[0]} />} </Card.Title></Card>
             </Col>
         </Row>
     }

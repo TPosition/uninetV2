@@ -11,7 +11,7 @@ export default function Post() {
     const { pid } = router.query
 
     async function findApi() {
-        const res = await fetch('/api/dashboard/find', {
+        const res = await fetch('/api/trading/find', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export default function Post() {
     }
 
     return <Layout setUser={setUser}>
-        <PostContent data={data} user={user} path="dashboard" />
+        <PostContent data={data} user={user} path="trading" replies={true} />
     </Layout>
 
 }

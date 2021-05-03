@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { ChatDots, House, ArrowLeftRight, Briefcase, ChatLeftDots, BoxArrowInLeft } from 'react-bootstrap-icons';
+import { ChatDots, House, ArrowLeftRight, Briefcase, ChatLeftDots, BoxArrowInLeft, People } from 'react-bootstrap-icons';
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import Router from 'next/router'
 import Link from 'next/link'
@@ -27,12 +27,7 @@ export default function GeneralLayout({ children, setUser }) {
 
     const router = useRouter()
     const pathName = router.pathname
-    // const [user, setUser] = useState("")
-
-    function logOut() {
-        localStorage.removeItem("user");
-        router.push("/");
-    }
+    const [tmpUser, setTmpUser] = useState("")
 
     useEffect(() => {
         let userTmp = localStorage.getItem("user")
@@ -43,8 +38,10 @@ export default function GeneralLayout({ children, setUser }) {
         const bytes = Crypto.AES.decrypt(userTmp, process.env.CRYPTO_KEY)
         const decryptedData = bytes.toString(Crypto.enc.Utf8);
 
-        if (decryptedData)
+        if (decryptedData) {
             setUser(JSON.parse(bytes.toString(Crypto.enc.Utf8)))
+            setTmpUser(JSON.parse(bytes.toString(Crypto.enc.Utf8)))
+        }
 
         else router.push("/login")
     }, [])
@@ -64,11 +61,8 @@ export default function GeneralLayout({ children, setUser }) {
                     defaultSelectedKeys={[pathName]}
                     style={{ borderRight: 0 }}
                 >
-                    <Menu.Item key="/dashboard" icon={<InfoCircleOutlined />}>
-                        <Link href={{ pathname: '/dashboard', query: {} }}>
-                            Dashboard
-                        </Link>
-                    </Menu.Item>
+                    {tmpUser.type === 1 && menuItem("Users", "/users", <People />)}
+                    {menuItem("Dashboard", "/dashboard", <InfoCircleOutlined />)}
                     {menuItem("Topics", "/topics", <ChatLeftDots />)}
                     {menuItem("Hostels", "/hostels", <House />)}
                     {menuItem("Trading", "/trading", <ArrowLeftRight />)}
@@ -90,4 +84,9 @@ export default function GeneralLayout({ children, setUser }) {
             </Layout>
         </Layout>
     </>
+
+    function logOut() {
+        localStorage.removeItem("user");
+        router.reload();
+    }
 }

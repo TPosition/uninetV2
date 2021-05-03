@@ -1,19 +1,16 @@
-
-import { query } from '../../../lib/db'
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 
 const handler = async (req, res) => {
+    const { pid } = req.body
+
     try {
-        // const results = await query(
-        //     `
-        //     SELECT *
-        //     FROM topics
-        //     ORDER BY id DESC;
-        //     `
-        // )
-        const results = await prisma.topics.findMany()
+        const results = await prisma.trading.findMany({
+            where: {
+                id: Number(pid)
+            }
+        })
 
         if (results[0]) {
             return res.json(results)

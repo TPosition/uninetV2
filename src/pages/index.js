@@ -1,18 +1,14 @@
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Crypto from 'crypto-js'
 import Skeleton from 'react-loading-skeleton'
 
 import Particles from 'react-particles-js';
 import particlesConfig from '../data/particlesjs-config.json'
-import Layout from '../components/Layout'
 
 export default function Home() {
-
-  const [user, setUser] = useState("")
   const router = useRouter()
-  const [page, setPage] = useState(1)
 
   useEffect(() => {
     let userTmp = localStorage.getItem("user")

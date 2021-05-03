@@ -10,27 +10,29 @@ datasource db {
 model User {
   id        String   @id
   createdAt DateTime @default(now())
-  Anonymous String
+  anonymous String
   type      Int
   password  String
 }
 
 model Topics {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  user      String
-  tag       String
-  title     String
-  content   String
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  user        String
+  tag         String
+  title       String
+  content     String
+  isAnonymous Boolean  @default(false)
 }
 
 model Replies {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  msgId     Int
-  category  String
-  user      String
-  content   String
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  msgId       Int
+  category    String
+  user        String
+  content     String
+  isAnonymous Boolean  @default(false)
 }
 
 model Dashboard {

@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 
 const handler = async (req, res) => {
-    const { id, password } = await req.body
+    const { id, password } = req.body
     try {
 
         if (!id || !password) {
@@ -15,7 +15,6 @@ const handler = async (req, res) => {
         const results = await prisma.user.findFirst({
             where: {
                 id: id,
-                password: password,
             },
         })
 

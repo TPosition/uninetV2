@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button, Modal, Form, Carousel, Table } from 'react-bootstrap'
 import Head from 'next/head'
 import { Plus } from 'react-bootstrap-icons'
 import { useEffect, useState } from 'react'
@@ -7,12 +7,13 @@ import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router'
 
 export default function PostContent(props) {
-    const { data = {}, user, path, replies = false } = props
+    const { data, user, path, replies = false } = props
     const [isDeleting, setIsDeleting] = useState(false)
     const [replyContent, setReplyContent] = useState("")
     const [replying, setIsReplying] = useState(false)
     const [replyData, setReplyData] = useState({})
     const router = useRouter()
+    const imageData = data.image ? JSON.parse(data.image) : null
 
     const replyFormSubmit = async event => {
         event.preventDefault()
@@ -32,26 +33,43 @@ export default function PostContent(props) {
 
         const result = await res.json()
         setIsReplying(false)
-        router.reload()
+        setReplyContent("")
     }
 
-    useEffect(() => {
-    }, [])
-
-    if (router.isReady)
+    if (router.isReady) {
         getReplies()
+    }
 
     return <div>
         {!data && <Skeleton count={10} />}
         <h3>{data.title}</h3>
         <title>{data.title} | uniNet</title>
         <Modal.Body>
-            {(user.user === "admin" || data.user === user.user) && <Button disabled={isDeleting}
+            {(user.type === "1" || data.user === user.user) && <Button disabled={isDeleting}
                 className="float-right"
                 onClick={async () => { await deleteMsg(data.id) }}
                 variant="danger">{isDeleting ? "Deleting" : "Delete"}</Button>}
-            <pre class="text-grey">{String(data.createdAt).substring(0, 10)}</pre>
-            <p class="white-space-pre" dangerouslySetInnerHTML={{ __html: data.content }} ></p>
+            <pre class="text-grey">{data.user} @ {String(data.createdAt).substring(0, 10)} {String(data.createdAt).substring(11, 16)}</pre>
+            {imageData && <Carousel className="bg-trans-grey" >
+                {imageData[0] && Object.keys(imageData).map((key, index) => {
+                    return <Carousel.Item key={index}>
+                        <img
+                            className="d-block w-50 mx-auto"
+                            src={String(imageData[key])}
+                            style={{ height: 600 }}
+                        />
+                    </Carousel.Item>
+                })
+                }
+            </Carousel>}
+
+            <Table striped bordered hover>
+                <tbody>
+                    {data.contact && <tr><td class="w-25">Contact</td><td>{data.contact}</td></tr>}
+                </tbody>
+            </Table>
+
+            <p class="white-space-pre" dangerouslySetInnerHTML={{ __html: data.content ? data.content : data.description }} ></p>
         </Modal.Body>
         {replies && replyComponent()}
     </div>
@@ -77,7 +95,7 @@ export default function PostContent(props) {
 
             {replyData[0] && replyData[0].map((key0, index) => {
                 return <div key={index}>
-                    <pre class="text-grey">{key0.user} @ {String(key0.createdAt).substring(0, 10)}</pre>
+                    <pre class="text-grey">{key0.user} @ {String(key0.createdAt).substring(0, 10)} {String(key0.createdAt).substring(11, 16)}</pre>
                     <p class="white-space-pre" dangerouslySetInnerHTML={{ __html: key0.content }} ></p>
                 </div>
             })}
@@ -98,8 +116,6 @@ export default function PostContent(props) {
             }),
         })
         let result = await res.json()
-        console.log(result)
-        console.log(data.id)
         setReplyData(result)
     }
 
@@ -115,7 +131,6 @@ export default function PostContent(props) {
             }),
         })
         const result = await res.json()
-        console.log(result)
         setIsDeleting(false)
         router.back()
     }

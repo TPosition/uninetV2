@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Card, Button, Form } from 'react-bootstrap'
 import Router from 'next/router'
-import Cryto from 'crypto-js'
+import Crypto from 'crypto-js'
 
 export default function LoginForm() {
 
@@ -35,21 +35,24 @@ export default function LoginForm() {
             const userObj = {
                 isLogged: true,
                 user: id,
-                type: 0,
+                type: 1,
                 anonymous: "Anonymous"
             }
-            localStorage.setItem("user", Cryto.AES.encrypt(JSON.stringify(userObj), process.env.CRYPTO_KEY).toString());
+            localStorage.setItem("user", Crypto.AES.encrypt(JSON.stringify(userObj), process.env.CRYPTO_KEY).toString());
             Router.push('/')
         }
 
-        if (result.id && !result.message) {
+        const bytes = Crypto.AES.decrypt(result.password, process.env.CRYPTO_KEY)
+        const decryptedData = bytes.toString(Crypto.enc.Utf8);
+
+        if (decryptedData === password && !result.message) {
             const userObj = {
                 isLogged: true,
                 user: result.id,
                 type: result.type,
-                anonymous: result.Anonymous
+                anonymous: result.anonymous
             }
-            localStorage.setItem("user", Cryto.AES.encrypt(JSON.stringify(userObj), process.env.CRYPTO_KEY).toString());
+            localStorage.setItem("user", Crypto.AES.encrypt(JSON.stringify(userObj), process.env.CRYPTO_KEY).toString());
             Router.push('/');
         }
         if (result.message) setAlert(result.message)
@@ -59,6 +62,7 @@ export default function LoginForm() {
 
     return (
         <Card className="mx-auto mt-5 bg-glass w-25">
+            <title>Login | uniNet</title>
             <Card.Body>
                 {alert && <div class="bg-glass-red alert alert-danger" role="alert">
                     {alert}
@@ -71,7 +75,7 @@ export default function LoginForm() {
                     </Form.Group>
                     <Form.Group controlId="password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+                        <Form.Control type="password" value={password} onChange={e => { setPassword(e.target.value) }} placeholder="Password" />
                     </Form.Group>
                     <Button disabled={isLoading} className="w-100" variant="primary" type="submit">
                         {isLoading ? "Logging In" : "Log In"}
