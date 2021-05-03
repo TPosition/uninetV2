@@ -4,5 +4,11 @@ module.exports = {
   },
   "include": [
     "react-file-reader"
-  ]
+  ],
+  development: {
+    client: 'sqlite3',
+    connection: {
+      filename: '/prisma/dev.db'
+    }
+  }
 }
