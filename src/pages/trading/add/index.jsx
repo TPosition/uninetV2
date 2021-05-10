@@ -10,10 +10,10 @@ export default function Add() {
     const [isLoading, setIsLoading] = useState(false)
     const [hasMsg, setHasMsg] = useState("")
     const router = useRouter()
-    const tabOption = ["Books", "Accessories", "Others"]
+    const tabOption = ["Books", "Accessories", "Other"]
 
     const [user, setUser] = useState("")
-    const [tag, setTag] = useState("Others")
+    const [tag, setTag] = useState("Other")
     const [description, setDescription] = useState("")
     const [title, setTitle] = useState("")
     const [contact, setContact] = useState("")
@@ -48,7 +48,7 @@ export default function Add() {
     }
 
     return <Layout setUser={setUser}>
-        <Button variant="light" className="float-right" onClick={() => router.back()}><ArrowLeft /> Back</Button>
+        <Button variant="light" className="float-right" onClick={() => router.push("/trading")}><ArrowLeft /> Back</Button>
         <h3>Add</h3>
         <title>Add | uniNet</title>
         <Form onSubmit={formSubmit}>

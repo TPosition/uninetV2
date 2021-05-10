@@ -69,3 +69,21 @@ model Trading {
   description String
   user        String
 }
+
+model Jobs {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  user            String
+  tag             String
+  contact         String
+  salary          String
+  perPeriod       String
+  workingHour     String
+  workingDuration String
+  position        String
+  scope           String
+  requirement     String
+  description     String
+  company         String
+  address         String
+}

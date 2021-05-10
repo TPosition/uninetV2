@@ -49,7 +49,7 @@ export default function Board(props) {
     function Listing(key, dex) {
         return <Row>
             <Col>
-                <Card as="a" key={dex} onClick={() => router.push(router.pathname + "/" + key.id)} className="text-grey text-decoration-none w-100 mt-2 pl-2 bg-glass-pure hover-shadow mh-48 cursor-pointer pr-3 pt-1"><Card.Title> {key.title}{key.tag ? " | " + key.tag : ""} {key.image && <img class="float-right" height={40} src={JSON.parse(key.image)[0]} />} </Card.Title></Card>
+                <Card as="a" key={dex} onClick={() => router.push(router.pathname + "/" + key.id)} className="text-grey text-decoration-none w-100 mt-2 pl-2 bg-glass-pure hover-shadow mh-48 cursor-pointer pr-3 pt-1"><Card.Title> {key.title}{key.unit}{key.position}{key.tag ? " | " + key.tag : ""} {key.image && <img class="float-right" height={40} src={JSON.parse(key.image)[0]} />} </Card.Title></Card>
             </Col>
         </Row>
     }

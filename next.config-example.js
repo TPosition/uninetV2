@@ -1,8 +1,10 @@
 module.exports = {
   env: {
-    CRYPTO_KEY: ""
+    CRYPTO_KEY: "",
+    STREAM_KEY: "",
+    STREAM_SECRET: ""
   },
-  "include": [
+  include: [
     "react-file-reader"
   ],
   development: {

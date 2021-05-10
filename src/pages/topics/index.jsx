@@ -4,18 +4,17 @@ import Board from '../../components/Board'
 
 import Layout from '../../components/Layout'
 
-export default function Trading() {
+export default function Topics() {
     const router = useRouter()
-    const tabOption = ["Books", "Accessories", "Other"]
     const [user, setUser] = useState("")
     const [data, setData] = useState([])
-
+    const tabOption = ["Study", "Job", "Skill", "Tips", "Lifestyle", "Other"]
     useEffect(() => {
         getApi()
     }, [])
 
     async function getApi() {
-        const res = await fetch('/api/trading/get', {
+        const res = await fetch('/api/topics/get', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,6 +25,6 @@ export default function Trading() {
     }
 
     return <Layout setUser={setUser}>
-        <Board boardTitle="Trading" ApiData={data} tabOption={tabOption} plusOnClick={() => router.push(router.pathname + "/add")} ></Board>
+        <Board boardTitle="Topics" ApiData={data} tabOption={tabOption} plusOnClick={() => router.push(router.pathname + "/add")} ></Board>
     </Layout>
 }
